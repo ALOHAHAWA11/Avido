@@ -6,13 +6,15 @@ services:
     build: ./app/
     command: gunicorn avido.wsgi --bind 0.0.0.0:8001
     expose:
-      - "8001"
+      - 8001
     ports:
       - 8001:8001
     env_file:
       - ./app.env
     depends_on:
       - postgres
+    volumes:
+      - static_volume:/app/staticfiles
 
   postgres:
     image: postgres:16
@@ -24,5 +26,15 @@ services:
     env_file:
       - ./app.env
 
+  nginx:
+    build: ./nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - web
+    volumes:
+      - static_volume:/app/staticfiles
+
 volumes:
   postgres_volume:
+  static_volume:
