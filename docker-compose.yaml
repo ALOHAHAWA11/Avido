@@ -4,13 +4,15 @@ services:
   web:
     container_name: web
     build: ./app/
-    command: python manage.py runserver 0.0.0.0:8001 --noreload
+    command: gunicorn avido.wsgi --bind 0.0.0.0:8001
     expose:
       - "8001"
     ports:
       - 8001:8001
     env_file:
       - ./app.env
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:16
