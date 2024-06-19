@@ -2,6 +2,7 @@ version: '3'
 
 services:
   web:
+    container_name: web
     build: ./app/
     command: python manage.py runserver 0.0.0.0:8001 --noreload
     expose:
@@ -16,6 +17,10 @@ services:
     restart: always
     ports:
       - 5431:5432
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=dbpassword
+      - POSTGRES_DB=avido_db
 
 volumes:
   postgres_volume:
