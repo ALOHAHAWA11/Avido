@@ -9,6 +9,8 @@ services:
       - "8001"
     ports:
       - 8001:8001
+    env_file:
+      - ./app.env
 
   postgres:
     image: postgres:16
@@ -17,10 +19,8 @@ services:
     restart: always
     ports:
       - 5431:5432
-    environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=dbpassword
-      - POSTGRES_DB=avido_db
+    env_file:
+      - ./app.env
 
 volumes:
   postgres_volume:
